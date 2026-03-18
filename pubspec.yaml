@@ -8,7 +8,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 executables:
-  indic_transliterate: bin/indic_transliterate.dart
+  indic_transliterate: bin/indic_transliterate
 
 dev_dependencies:
   lints: ^6.0.0
