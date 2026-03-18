@@ -1,3 +1,5 @@
+#!/usr/bin/env dart
+
 import 'dart:io';
 import 'package:indic_transliteration_dart/indic_transliteration_dart.dart';
 
@@ -37,6 +39,10 @@ void main(List<String> arguments) {
       case '--help':
         printHelp();
         exit(0);
+      case '-v':
+      case '--version':
+        print('indic_transliterate version 2.3.80');
+        exit(0);
     }
   }
 
@@ -64,8 +70,10 @@ void main(List<String> arguments) {
 }
 
 void printHelp() {
+  print('indic_transliterate - Indic Transliteration CLI Tool');
+  print('');
   print(
-      'Usage: dart convert_file.dart -f <from_scheme> -t <to_scheme> -i <input_file> -o <output_file>');
+      'Usage: indic_transliterate -f <from_scheme> -t <to_scheme> -i <input_file> -o <output_file>');
   print('');
   print('Options:');
   print(
@@ -75,13 +83,19 @@ void printHelp() {
   print('  -i, --input-file  Input file path');
   print('  -o, --output-file Output file path');
   print('  -h, --help        Show this help message');
+  print('  -v, --version     Show version information');
   print('');
   print('Example:');
   print(
-      '  dart convert_file.dart -f slp1 -t devanagari -i input.txt -o output.txt');
+      '  indic_transliterate -f slp1 -t devanagari -i input.txt -o output.txt');
   print('');
   print('Available schemes:');
-  print('  Roman: hk, iast, itrans, slp1, velthuis, wx, kolkata_v2, etc.');
   print(
-      '  Brahmic: devanagari, bengali, gujarati, gurmukhi, kannada, malayalam, oriya, tamil, telugu, etc.');
+      '  Roman: hk, hk_dravidian, iast, iso, iso_vedic, itrans, itrans_dravidian,');
+  print(
+      '         titus, optitrans, optitrans_dravidian, kolkata_v2, slp1, velthuis, wx');
+  print(
+      '  Brahmic: devanagari, bengali, gujarati, gurmukhi, kannada, malayalam,');
+  print(
+      '          oriya, tamil, tamil_superscripted, tamil_subscripted, grantha, telugu');
 }
