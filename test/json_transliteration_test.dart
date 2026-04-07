@@ -76,8 +76,9 @@ void main() {
       if (devExpected == null) continue;
 
       for (final script in tc.keys) {
-        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script)) {
           continue;
+        }
 
         final input = tc[script] as String?;
         if (input == null) continue;
@@ -100,8 +101,9 @@ void main() {
       if (devInput == null) continue;
 
       for (final script in tc.keys) {
-        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script)) {
           continue;
+        }
 
         final expected = tc[script] as String?;
         if (expected == null) continue;
@@ -125,15 +127,16 @@ void main() {
       if (devExpected == null) continue;
 
       for (final script in tc.keys) {
-        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script)) {
           continue;
+        }
 
         final input = tc[script] as String?;
         if (input == null) continue;
 
         test('roundtrip $description - $script', () {
-          final toScript =
-              transliterate(devExpected, fromScheme: devanagari, toScheme: script);
+          final toScript = transliterate(devExpected,
+              fromScheme: devanagari, toScheme: script);
           final backToDev =
               transliterate(toScript, fromScheme: script, toScheme: devanagari);
           expect(backToDev, equals(devExpected));

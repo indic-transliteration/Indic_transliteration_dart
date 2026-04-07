@@ -478,8 +478,10 @@ class SchemeMap {
       final Map<String, String> conjunctMap = {};
       final Map<String, dynamic> toGroup = {};
       toGroup.addAll(Map<String, dynamic>.from((toData[group] as Map?) ?? {}));
-      toGroup.addAll(Map<String, dynamic>.from((toData['extra_$group'] as Map?) ?? {}));
-      toGroup.addAll(Map<String, dynamic>.from((toData['approximate_$group'] as Map?) ?? {}));
+      toGroup.addAll(
+          Map<String, dynamic>.from((toData['extra_$group'] as Map?) ?? {}));
+      toGroup.addAll(Map<String, dynamic>.from(
+          (toData['approximate_$group'] as Map?) ?? {}));
 
       void processFromGroup(Map? groupData) {
         if (groupData == null) return;
@@ -503,7 +505,8 @@ class SchemeMap {
             }
 
             final alternates = fromScheme.getAlternates();
-            if (alternates != null && alternates.containsKey(fromSchemeSymbol)) {
+            if (alternates != null &&
+                alternates.containsKey(fromSchemeSymbol)) {
               final altValue = alternates[fromSchemeSymbol];
               if (altValue is List) {
                 for (final alt in altValue) {
@@ -618,7 +621,6 @@ extension SchemeExtensions on Scheme {
 
   String getDoubleLettered(String data) {
     final vowels = getVowels() ?? {};
-    final vowelMarks = getVowelMarks() ?? {};
 
     var result = data;
     for (final entry in vowels.entries) {

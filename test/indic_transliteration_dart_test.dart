@@ -514,7 +514,7 @@ void main() {
     test('join_post_viraama', () {
       final scheme = getScheme(devanagari);
       final result = scheme.joinPostViraama('प्रोक्तं ब्रह्म स्वयंभ्व् इत्यपि');
-      expect(result.length > 0, isTrue);
+      expect(result.isNotEmpty, isTrue);
     });
 
     test('join_strings', () {

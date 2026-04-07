@@ -7,10 +7,6 @@ class InvalidRomanNumeralError implements Exception {
 }
 
 int convertToInteger(String numeral) {
-  if (numeral is! String) {
-    throw TypeError();
-  }
-
   if (numeral.isEmpty) {
     throw InvalidRomanNumeralError('Empty string is not a valid Roman numeral');
   }
