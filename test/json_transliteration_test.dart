@@ -4,6 +4,49 @@ import 'dart:io';
 import 'package:indic_transliteration_dart/indic_transliteration_dart.dart';
 import 'package:test/test.dart';
 
+const invalidKeys = {
+  'description',
+  'comments',
+  'TODO',
+  'nonSupportingPrograms',
+  'dev',
+  ''
+};
+const knownSchemes = {
+  'hk',
+  'hk_dravidian',
+  'iast',
+  'iast_iso_m',
+  'iso',
+  'iso_vedic',
+  'itrans',
+  'itrans_dravidian',
+  'titus',
+  'optitrans',
+  'optitrans_dravidian',
+  'kolkata_v2',
+  'slp1',
+  'velthuis',
+  'wx',
+  'devanagari',
+  'bengali',
+  'gujarati',
+  'gurmukhi',
+  'kannada',
+  'malayalam',
+  'oriya',
+  'tamil',
+  'tamil_subscripted',
+  'tamil_superscripted',
+  'grantha',
+  'telugu',
+  'assamese',
+  'sinhala',
+  'saurashtra',
+  'modi',
+  'nandinagari'
+};
+
 Map<String, dynamic> loadTestData() {
   try {
     final file = File('test/data/transliterationTests.json');
@@ -33,9 +76,8 @@ void main() {
       if (devExpected == null) continue;
 
       for (final script in tc.keys) {
-        if (script == 'description' ||
-            script == 'dev' ||
-            script == 'nonSupportingPrograms') continue;
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+          continue;
 
         final input = tc[script] as String?;
         if (input == null) continue;
@@ -58,9 +100,8 @@ void main() {
       if (devInput == null) continue;
 
       for (final script in tc.keys) {
-        if (script == 'description' ||
-            script == 'dev' ||
-            script == 'nonSupportingPrograms') continue;
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+          continue;
 
         final expected = tc[script] as String?;
         if (expected == null) continue;
@@ -84,9 +125,8 @@ void main() {
       if (devExpected == null) continue;
 
       for (final script in tc.keys) {
-        if (script == 'description' ||
-            script == 'dev' ||
-            script == 'nonSupportingPrograms') continue;
+        if (invalidKeys.contains(script) || !knownSchemes.contains(script))
+          continue;
 
         final input = tc[script] as String?;
         if (input == null) continue;

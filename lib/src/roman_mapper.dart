@@ -1,5 +1,43 @@
 import 'scheme.dart';
 
+const _capitalizableSchemeIds = [
+  'iast',
+  'iast_iso_m',
+  'iso',
+  'iso_vedic',
+  'kolkata_v2',
+  'titus',
+];
+
+const _capitalToLower = {
+  'A': 'a',
+  'B': 'b',
+  'C': 'c',
+  'D': 'd',
+  'E': 'e',
+  'F': 'f',
+  'G': 'g',
+  'H': 'h',
+  'I': 'i',
+  'J': 'j',
+  'K': 'k',
+  'L': 'l',
+  'M': 'm',
+  'N': 'n',
+  'O': 'o',
+  'P': 'p',
+  'Q': 'q',
+  'R': 'r',
+  'S': 's',
+  'T': 't',
+  'U': 'u',
+  'V': 'v',
+  'W': 'w',
+  'X': 'x',
+  'Y': 'y',
+  'Z': 'z',
+};
+
 String roman(
   String data,
   SchemeMap schemeMap, {
@@ -14,12 +52,27 @@ String roman(
   final nonMarksViraama = schemeMap.nonMarksViraama;
   final maxKeyLengthFromScheme = schemeMap.maxKeyLengthFromScheme;
   final toRoman = schemeMap.toScheme.isRoman;
+  final fromSchemeName = schemeMap.fromScheme.name;
+
+  var processedData = data;
+  if (_capitalizableSchemeIds.contains(fromSchemeName)) {
+    final buf = StringBuffer();
+    for (var i = 0; i < processedData.length; i++) {
+      final char = processedData[i];
+      if (_capitalToLower.containsKey(char)) {
+        buf.write(_capitalToLower[char]!);
+      } else {
+        buf.write(char);
+      }
+    }
+    processedData = buf.toString();
+  }
 
   final buf = <String>[];
   var i = 0;
   var hadConsonant = false;
   var found = false;
-  final dataLength = data.length;
+  final dataLength = processedData.length;
 
   var toggled = false;
   var suspended = false;
@@ -27,9 +80,9 @@ String roman(
   while (i <= dataLength) {
     var token = '';
     if (i + maxKeyLengthFromScheme <= dataLength) {
-      token = data.substring(i, i + maxKeyLengthFromScheme);
+      token = processedData.substring(i, i + maxKeyLengthFromScheme);
     } else {
-      token = data.substring(i);
+      token = processedData.substring(i);
     }
 
     while (token.isNotEmpty) {
@@ -81,7 +134,7 @@ String roman(
         buf.add(virama[''] ?? '');
       }
       if (i < dataLength) {
-        buf.add(data[i]);
+        buf.add(processedData[i]);
         hadConsonant = false;
       }
       i++;
@@ -105,15 +158,7 @@ String roman(
     }
   }
 
-  const capitalizableSchemeIds = [
-    'iast',
-    'iast_iso_m',
-    'iso',
-    'iso_vedic',
-    'kolkata_v2',
-    'titus',
-  ];
-  if (capitalizableSchemeIds.contains(schemeMap.fromScheme.name)) {
+  if (_capitalizableSchemeIds.contains(schemeMap.fromScheme.name)) {
     result = schemeMap.toScheme.fixOm(result);
   }
 
