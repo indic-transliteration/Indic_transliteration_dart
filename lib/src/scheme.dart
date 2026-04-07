@@ -149,6 +149,265 @@ class Scheme {
     }
     return result;
   }
+
+  String forceLazyAnusvaara(String dataIn) {
+    final anusvara = data['yogavaahas']?['ं']?.toString() ?? 'ं';
+    final consonants = getConsonants() ?? {};
+    final virama = data['virama']?['']?.toString() ?? '्';
+
+    final result = StringBuffer();
+    for (var i = 0; i < dataIn.length; i++) {
+      final char = dataIn[i];
+      if (char == anusvara && i > 0) {
+        final prevChar = dataIn[i - 1];
+        if (consonants.containsKey(prevChar)) {
+          result.write(prevChar);
+          result.write(virama);
+          result.write(anusvara);
+          continue;
+        }
+      }
+      result.write(char);
+    }
+    return result.toString();
+  }
+
+  String fixLazyAnusvaara(
+    String dataIn, {
+    bool ignorePadaanta = true,
+    bool omitYrl = false,
+    bool omitSam = false,
+  }) {
+    final anusvara = data['yogavaahas']?['ं']?.toString() ?? 'ं';
+    final consonants = getConsonants() ?? {};
+    final result = StringBuffer();
+
+    for (var i = 0; i < dataIn.length; i++) {
+      final char = dataIn[i];
+
+      if (char == anusvara && i > 0) {
+        final prevChar = dataIn[i - 1];
+
+        if (consonants.containsKey(prevChar)) {
+          final following = i + 1 < dataIn.length ? dataIn[i + 1] : '';
+          final followingConsonant = consonants.containsKey(following);
+
+          if (!followingConsonant || i + 1 >= dataIn.length) {
+            if (omitSam && prevChar == 'स') {
+              result.write(char);
+              continue;
+            }
+            if (omitYrl &&
+                (prevChar == 'य' || prevChar == 'र' || prevChar == 'ल')) {
+              result.write(char);
+              continue;
+            }
+            if (ignorePadaanta) {
+              result.write(char);
+              continue;
+            }
+            final anusvaraDev = '\u0901';
+            result.write(anusvaraDev);
+            continue;
+          }
+        }
+      }
+      result.write(char);
+    }
+
+    return result.toString();
+  }
+
+  String fixLazyVisarga(String dataIn) {
+    final visargas = data['yogavaahas']?['ः']?.toString() ?? 'ः';
+    final result = dataIn;
+
+    if (visargas.isEmpty) return result;
+
+    final char1 = '\u1FD3';
+    final char2 = '\u1FD4';
+
+    return result
+        .replaceAllMapped(
+          RegExp('(?<=.)($visargas)(?= )'),
+          (match) => char1,
+        )
+        .replaceAllMapped(
+          RegExp('(?<=.)($visargas)(?= )'),
+          (match) => char2,
+        );
+  }
+
+  String approximateVisargas(String dataIn,
+      {VisargaApproximation mode = VisargaApproximation.aha}) {
+    final visarga = data['yogavaahas']?['ः']?.toString() ?? 'ः';
+    if (visarga.isEmpty) return dataIn;
+
+    if (mode == VisargaApproximation.h) {
+      final virama = data['virama']?['']?.toString() ?? '्';
+      return dataIn.replaceAll(visarga, 'ह$virama');
+    } else {
+      return dataIn.replaceAll(visarga, 'हि');
+    }
+  }
+
+  String doVyanjanaSvaraJoin(String consonant, String vowel) {
+    final virama = data['virama']?['']?.toString() ?? '्';
+
+    final consonants = getConsonants() ?? {};
+    final vowels = getVowels() ?? {};
+
+    if (consonants.containsKey(consonant) ||
+        (consonant.length > 1 &&
+            vowels.containsKey(consonant[consonant.length - 1]))) {
+      if (consonant != vowel && !vowels.containsKey(consonant)) {
+        return consonant + virama + vowel;
+      }
+    }
+    return consonant + vowel;
+  }
+
+  List<String> splitVyanjanasAndSvaras(String dataIn, {String? skipPattern}) {
+    final consonants = getConsonants() ?? {};
+    final vowels = getVowels() ?? {};
+    final vowelMarks = getVowelMarks() ?? {};
+    final virama = data['virama']?['']?.toString() ?? '्';
+    final anusvara = data['yogavaahas']?['ं']?.toString() ?? 'ं';
+    final visarga = data['yogavaahas']?['ः']?.toString() ?? 'ः';
+
+    final result = <String>[];
+    final buf = StringBuffer();
+    var hadConsonant = false;
+
+    for (var i = 0; i < dataIn.length; i++) {
+      final char = dataIn[i];
+      final remaining = dataIn.substring(i);
+
+      if (skipPattern != null && remaining.startsWith(skipPattern)) {
+        if (buf.isNotEmpty) {
+          result.add(buf.toString());
+          buf.clear();
+          hadConsonant = false;
+        }
+        final match = RegExp(skipPattern).firstMatch(remaining);
+        if (match != null) {
+          result.add(match.group(0)!);
+          i += match.group(0)!.length - 1;
+          continue;
+        }
+      }
+
+      if (consonants.containsKey(char)) {
+        if (buf.isNotEmpty && hadConsonant) {
+          result.add(buf.toString());
+          buf.clear();
+        }
+        buf.write(char);
+        hadConsonant = true;
+
+        if (i + 1 < dataIn.length) {
+          final nextChar = dataIn[i + 1];
+          if (nextChar != virama &&
+              !consonants.containsKey(nextChar) &&
+              !vowels.containsKey(nextChar)) {
+            result.add(buf.toString());
+            buf.clear();
+            hadConsonant = false;
+          }
+        }
+      } else if (vowels.containsKey(char)) {
+        if (hadConsonant && buf.isNotEmpty) {
+          result.add(buf.toString());
+          buf.clear();
+          hadConsonant = false;
+        }
+        buf.write(char);
+      } else if (vowelMarks.containsKey(char)) {
+        buf.write(char);
+      } else if (char == virama) {
+        buf.write(char);
+      } else if (char == anusvara || char == visarga) {
+        buf.write(char);
+      } else {
+        if (buf.isNotEmpty) {
+          result.add(buf.toString());
+          buf.clear();
+          hadConsonant = false;
+        }
+        buf.write(char);
+      }
+    }
+
+    if (buf.isNotEmpty) {
+      result.add(buf.toString());
+    }
+
+    return result;
+  }
+
+  String joinPostViraama(String dataIn) {
+    final virama = data['virama']?['']?.toString() ?? '्';
+    final viramaPattern = RegExp('$virama\\s*');
+    return dataIn.replaceAll(viramaPattern, '');
+  }
+
+  String joinStrings(List<String> letters) {
+    if (letters.isEmpty) return '';
+
+    final consonants = getConsonants() ?? {};
+    final vowels = getVowels() ?? {};
+    final vowelMarks = getVowelMarks() ?? {};
+    final virama = data['virama']?['']?.toString() ?? '्';
+
+    final result = StringBuffer();
+    var lastWasConsonant = false;
+
+    for (var i = 0; i < letters.length; i++) {
+      final letter = letters[i];
+
+      if (letter.isEmpty) continue;
+
+      final isConsonant = consonants.containsKey(letter);
+      final endsWithVirama = letter.endsWith(virama);
+      final isVowel =
+          vowels.containsKey(letter) || vowelMarks.containsKey(letter);
+
+      if (i > 0 && lastWasConsonant && !endsWithVirama) {
+        if (isConsonant || isVowel) {
+          result.write(virama);
+        }
+      }
+
+      result.write(letter);
+      lastWasConsonant = isConsonant || endsWithVirama;
+    }
+
+    return result.toString();
+  }
+
+  String applyRomanNumerals(String dataIn) {
+    final devanagariDigits =
+        '\u0966\u0967\u0968\u0969\u096A\u096B\u096C\u096D\u096E\u096F';
+    const asciiDigits = '0123456789';
+
+    final digitMap = <String, String>{};
+    for (var i = 0; i < devanagariDigits.length; i++) {
+      digitMap[devanagariDigits[i]] = asciiDigits[i];
+    }
+
+    var result = dataIn;
+    for (final entry in digitMap.entries) {
+      result = result.replaceAll(entry.key, entry.value);
+    }
+    return result;
+  }
+
+  String dotForNumericIds(String dataIn) {
+    final dotDevanagari = '।';
+    final dotAscii = '.';
+
+    return dataIn.replaceAll(dotDevanagari, dotAscii);
+  }
 }
 
 class SchemeMap {
@@ -163,7 +422,7 @@ class SchemeMap {
   final int maxKeyLengthFromScheme;
 
   SchemeMap(this.fromScheme, this.toScheme)
-    : maxKeyLengthFromScheme = _calculateMaxKeyLength(fromScheme) {
+      : maxKeyLengthFromScheme = _calculateMaxKeyLength(fromScheme) {
     _buildMappings();
   }
 

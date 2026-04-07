@@ -102,29 +102,33 @@ String getNumber(String text) {
 }
 
 String detect(String text) {
-  const brahmicFirstCodePoint = 0x0900;
-  const brahmicLastCodePoint = 0x0d7f;
-
-  final schemes = <(String, int)>[
-    ('bengali', 0x0980),
-    ('devanagari', 0x0900),
-    ('gujarati', 0x0a80),
-    ('gurmukhi', 0x0a00),
-    ('kannada', 0x0c80),
-    ('malayalam', 0x0d00),
-    ('oriya', 0x0b00),
-    ('tamil', 0x0b80),
-    ('telugu', 0x0c00),
-  ];
-
   for (final char in text.runes) {
-    if (char >= brahmicFirstCodePoint) {
-      for (final entry in schemes) {
-        final startCode = entry.$2;
-        if (char >= startCode && char <= brahmicLastCodePoint) {
-          return entry.$1;
-        }
-      }
+    if (char >= 0x0980 && char <= 0x09FF) {
+      return 'bengali';
+    }
+    if (char >= 0x0900 && char <= 0x097F) {
+      return 'devanagari';
+    }
+    if (char >= 0x0A80 && char <= 0x0AFF) {
+      return 'gujarati';
+    }
+    if (char >= 0x0A00 && char <= 0x0A7F) {
+      return 'gurmukhi';
+    }
+    if (char >= 0x0C80 && char <= 0x0CFF) {
+      return 'kannada';
+    }
+    if (char >= 0x0D00 && char <= 0x0D7F) {
+      return 'malayalam';
+    }
+    if (char >= 0x0B00 && char <= 0x0B7F) {
+      return 'oriya';
+    }
+    if (char >= 0x0B80 && char <= 0x0BFF) {
+      return 'tamil';
+    }
+    if (char >= 0x0C00 && char <= 0x0C7F) {
+      return 'telugu';
     }
   }
 
