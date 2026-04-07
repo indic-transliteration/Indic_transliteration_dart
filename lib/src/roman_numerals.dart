@@ -1,11 +1,43 @@
+/// Exception thrown when an invalid Roman numeral is encountered.
+///
+/// This exception is raised when the [convertToInteger] function receives
+/// a string that does not represent a valid Roman numeral.
 class InvalidRomanNumeralError implements Exception {
+  /// The error message describing the invalid numeral.
   final String message;
+
+  /// Creates a new InvalidRomanNumeralError with an optional message.
+  ///
+  /// [message] - The error message (default: 'Invalid Roman numeral').
   InvalidRomanNumeralError([this.message = 'Invalid Roman numeral']);
 
   @override
   String toString() => message;
 }
 
+/// Converts a Roman numeral to its integer value.
+///
+/// This function handles both uppercase and lowercase Roman numerals,
+/// as well as the subtractive notation (e.g., IV for 4, IX for 9).
+///
+/// Supported numerals:
+/// - I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000
+/// - Subtractive pairs: IV (4), IX (9), XL (40), XC (90), CD (400), CM (900)
+///
+/// [numeral] - The Roman numeral string to convert.
+///
+/// Returns the integer value of the numeral.
+///
+/// Throws [InvalidRomanNumeralError] if:
+/// - The input string is empty
+/// - The input contains invalid characters
+/// - The input is not a valid Roman numeral
+///
+/// Example:
+/// ```dart
+/// final value = convertToInteger('XLII'); // Returns 42
+/// final value = convertToInteger('MCMXCIV'); // Returns 1994
+/// ```
 int convertToInteger(String numeral) {
   if (numeral.isEmpty) {
     throw InvalidRomanNumeralError('Empty string is not a valid Roman numeral');
