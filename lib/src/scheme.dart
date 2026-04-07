@@ -454,23 +454,10 @@ class SchemeMap {
   final Map<String, String> consonants = {};
   final Map<String, String> nonMarksViraama = {};
   final Map<String, String> accents = {};
-  final int maxKeyLengthFromScheme;
+  int maxKeyLengthFromScheme = 1;
 
-  SchemeMap(this.fromScheme, this.toScheme)
-      : maxKeyLengthFromScheme = _calculateMaxKeyLength(fromScheme) {
+  SchemeMap(this.fromScheme, this.toScheme) {
     _buildMappings();
-  }
-
-  static int _calculateMaxKeyLength(Scheme scheme) {
-    int maxLen = 1;
-    for (final group in scheme.data.values) {
-      for (final key in group.keys) {
-        if (key.length > maxLen) {
-          maxLen = key.length;
-        }
-      }
-    }
-    return maxLen;
   }
 
   void _buildMappings() {
@@ -489,44 +476,52 @@ class SchemeMap {
       }
 
       final Map<String, String> conjunctMap = {};
-
-      final Map<String, dynamic> fromGroup = {};
-      fromGroup.addAll(Map<String, dynamic>.from((fromData['approximate_$group'] as Map?) ?? {}));
-      fromGroup.addAll(Map<String, dynamic>.from((fromData[group] as Map?) ?? {}));
-      fromGroup.addAll(Map<String, dynamic>.from((fromData['extra_$group'] as Map?) ?? {}));
-
       final Map<String, dynamic> toGroup = {};
       toGroup.addAll(Map<String, dynamic>.from((toData[group] as Map?) ?? {}));
       toGroup.addAll(Map<String, dynamic>.from((toData['extra_$group'] as Map?) ?? {}));
       toGroup.addAll(Map<String, dynamic>.from((toData['approximate_$group'] as Map?) ?? {}));
 
-      for (final entry in fromGroup.entries) {
-        final key = entry.key;
-        final fromSchemeSymbol = entry.value.toString();
+      void processFromGroup(Map? groupData) {
+        if (groupData == null) return;
+        for (final entry in groupData.entries) {
+          final key = entry.key;
+          final fromSchemeSymbol = entry.value.toString();
 
-        if (toGroup.containsKey(key)) {
-          var toSchemeSymbol = toGroup[key]?.toString() ?? '';
+          if (toGroup.containsKey(key)) {
+            var toSchemeSymbol = toGroup[key]?.toString() ?? '';
 
-          if (toSchemeSymbol.isEmpty &&
-              group != 'virama' &&
-              group != 'zwj' &&
-              group != 'skip') {
-            toSchemeSymbol = fromSchemeSymbol;
-          }
+            if (toSchemeSymbol.isEmpty &&
+                group != 'virama' &&
+                group != 'zwj' &&
+                group != 'skip') {
+              toSchemeSymbol = fromSchemeSymbol;
+            }
 
-          conjunctMap[fromSchemeSymbol] = toSchemeSymbol;
+            conjunctMap[fromSchemeSymbol] = toSchemeSymbol;
+            if (fromSchemeSymbol.length > maxKeyLengthFromScheme) {
+              maxKeyLengthFromScheme = fromSchemeSymbol.length;
+            }
 
-          final alternates = fromScheme.getAlternates();
-          if (alternates != null && alternates.containsKey(fromSchemeSymbol)) {
-            final altValue = alternates[fromSchemeSymbol];
-            if (altValue is List) {
-              for (final alt in altValue) {
-                conjunctMap[alt.toString()] = toSchemeSymbol;
+            final alternates = fromScheme.getAlternates();
+            if (alternates != null && alternates.containsKey(fromSchemeSymbol)) {
+              final altValue = alternates[fromSchemeSymbol];
+              if (altValue is List) {
+                for (final alt in altValue) {
+                  final altStr = alt.toString();
+                  conjunctMap[altStr] = toSchemeSymbol;
+                  if (altStr.length > maxKeyLengthFromScheme) {
+                    maxKeyLengthFromScheme = altStr.length;
+                  }
+                }
               }
             }
           }
         }
       }
+
+      processFromGroup(fromData['approximate_$group'] as Map?);
+      processFromGroup(fromData[group] as Map?);
+      processFromGroup(fromData['extra_$group'] as Map?);
 
       if (group == 'vowel_marks' || group.endsWith('_vowel_marks')) {
         vowelMarks.addAll(conjunctMap);

@@ -7,7 +7,7 @@
   ],
   "devanaagarii_round_trip": [
     {
-      "description": "A general test. Checks punctuations, OM.",
+      "description": "A general devanaagarii->X->devanaagarii test. Checks punctuations, OM.",
       "dev": "असय औषधिः ग्रन्थः! ॡकारो नास्ति लेशोऽपि संशयः। कीलकम्? कूपिः?  कष्ठं भोः। शङ्कर! ज्ञानम्।  सञ्जीवय। १२३४५॥ ॐ तत्।",
       "iast": "asaya auṣadhiḥ granthaḥ! ḹkāro nāsti leśo'pi saṃśayaḥ| kīlakam? kūpiḥ?  kaṣṭhaṃ bhoḥ| śaṅkara! jñānam|  sañjīvaya| 12345|| oṃ tat|",
       "iastDcs": "asaya auṣadhiḥ granthaḥ! ḹkāro nāsti leśo'pi saṃśayaḥ/ kīlakam? kūpiḥ?  kaṣṭhaṃ bhoḥ/ śaṅkara! jñānam/  sañjīvaya/ 12345// aum tat/",
@@ -35,11 +35,11 @@
       "kannada": "ಅಗ್ನಿಮೀಳೇ ಪುರೋಹಿತಂ ಯಜ್ಞಸ್ಯ ದೇವಮೃತ್ವಿಜಮ್",
       "malayalam": "അഗ്നിമീളേ പുരോഹിതം യജ്ഞസ്യ ദേവമൃത്വിജമ്",
       "telugu": "అగ్నిమీళే పురోహితం యజ్ఞస్య దేవమృత్విజమ్",
-      "sinhala": "අග්නිමීළේ පුරෝහිතං යජ්ඤස්ය දේවමෘත්විජම්",
+      "sinhala": "අග්නිමීළේ පුරෝහිතං යඥස්ය දේවමෘත්විජම්",
       "oriya": "ଅଗ୍ନିମୀଳେ ପୁରୋହିତଂ ଯଜ୍ଞସ୍ଯ ଦେଵମୃତ୍ଵିଜମ୍",
       "gurmukhi": "ਅਗ੍ਨਿਮੀਲ਼ੇ ਪੁਰੋਹਿਤਂ ਯਜ੍ਞਸ੍ਯ ਦੇਵਮृਤ੍ਵਿਜਮ੍",
       "gujarati": "અગ્નિમીળે પુરોહિતં યજ્ઞસ્ય દેવમૃત્વિજમ્",
-      "assamese": "অগ্নিমীळে পুৰোহিতং যজ্ঞস্য দেৱমৃত্ৱিজম্"
+      "assamese": "অগ্নিমীল়ে পুৰোহিতং যজ্ঞস্য দেৱমৃত্ৱিজম্"
     },
     {
       "description": "Tests WX avagraha and anunAsika options",
@@ -57,7 +57,7 @@
       "dev": "अंशाइ पड़िब फ़कीर ज़रूर",
       "oriya": "ଅଂଶାଇ ପଡ଼ିବ ଫ଼କୀର ଜ଼ରୂର",
       "gujarati": "અંશાઇ પડ઼િબ ફ઼કીર જ઼રૂર",
-      "assamese": "অংশাই পড়িব फ़কীৰ ज़ৰূৰ",
+      "assamese": "অংশাই পড়িব ফ়কীৰ ज़ৰূৰ",
       "gurmukhi": "ਅਂਸ਼ਾਇ ਪੜਿਬ ਫ਼ਕੀਰ ਜ਼ਰੂਰ",
       "itrans": "aMshaai pa.Diba fakiira zaruura"
     },
@@ -141,7 +141,7 @@
       "description": "A general test for scripts without equivalents for some devanAgarI letters, like gurmukhI, bengali and tamil",
       "dev": "असय औषधिः ग्रन्थः! ॡकारो नास्ति लेशोऽपि संशयः। कीलकम्? कूपिः?  कष्ठं भोः। शङ्कर! ज्ञानम्।  सञ्जीवय। १२३४५॥ ॐ तत्। अब अव",
       "bengali": "অসয ঔষধিঃ গ্রন্থঃ! ৡকারো নাস্তি লেশোঽপি সংশযঃ। কীলকম্? কূপিঃ?  কষ্ঠং ভোঃ। শঙ্কর! জ্ঞানম্।  সঞ্জীবয। ১২৩৪৫॥ ওঁ তত্। অব অব",
-      "gurmukhi": "ਅਸਯ ਔਸ਼ਧਿਃ ਗ੍ਰਨ੍ਥਃ! ॡਕਾਰੋ ਨਾਸ੍ਤਿ ਲੇਸ਼ੋऽਪਿ ਸਂਸ਼ਯਃ। ਕੀਲਕਮ੍? ਕੂਪਿਃ?  ਕਸ਼੍ਠਂ ਭੋਃ। ਸ਼ਙ੍ਕਰ! ਜ੍ਞਾਨਮ੍।  ਸਞ੍ਜੀਵਯ। ੧੨੩੪੫॥ ੴ ਤਤ੍। ਅਬ ਅਵ"
+      "gurmukhi": "ਅਸਯ ਔਸ਼਼ਧਿਃ ਗ੍ਰਨ੍ਥਃ! ॡਕਾਰੋ ਨਾਸ੍ਤਿ ਲੇਸ਼ੋऽਪਿ ਸਂਸ਼ਯਃ। ਕੀਲਕਮ੍? ਕੂਪਿਃ?  ਕਸ਼਼੍ਠਂ ਭੋਃ। ਸ਼ਙ੍ਕਰ! ਜ੍ਞਾਨਮ੍।  ਸਞ੍ਜੀਵਯ। ੧੨੩੪੫॥ ੴ ਤਤ੍। ਅਬ ਅਵ"
     },
     {
       "description": "A general test for Roman scripts without equivalents for some devanAgarI letters, like optitrans",
@@ -157,7 +157,7 @@
     {
       "description": "Fake OM",
       "dev": "तेजोंशसम्भवम्",
-      "iast": "tejoṃśasaṃbhavam"
+      "iast": "tejoṃśasambhavam"
     },
     {
       "description": "ea and oa",

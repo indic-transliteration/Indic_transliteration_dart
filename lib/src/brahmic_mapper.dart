@@ -126,10 +126,10 @@ String brahmic(String data, SchemeMap schemeMap) {
   final buf = <String>[];
   var i = 0;
   var toRomanHadConsonant = false;
-  var found = false;
   final dataLength = processedData.length;
 
   while (i <= dataLength) {
+    var found = false;
     var token = '';
     if (i + maxKeyLengthFromScheme <= dataLength) {
       token = processedData.substring(i, i + maxKeyLengthFromScheme);

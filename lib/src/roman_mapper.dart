@@ -86,13 +86,13 @@ String roman(
   final buf = <String>[];
   var i = 0;
   var hadConsonant = false;
-  var found = false;
   final dataLength = processedData.length;
 
   var toggled = false;
   var suspended = false;
 
   while (i <= dataLength) {
+    var found = false;
     var token = '';
     if (i + maxKeyLengthFromScheme <= dataLength) {
       token = processedData.substring(i, i + maxKeyLengthFromScheme);
