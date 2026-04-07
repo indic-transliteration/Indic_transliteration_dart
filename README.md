@@ -1,6 +1,6 @@
 # indic_transliteration_dart
 
-**Version: 2.3.79**
+**Version: 2.3.83**
 
 A Dart library for transliterating Indic scripts and romanizations. This is a Dart port of the [indic_transliteration_py](https://github.com/indic-transliteration/indic_transliteration_py) library.
 
@@ -295,6 +295,6 @@ void main() {
 ## Additional Information
 
 - This package is a Dart port of [indic_transliteration_py](https://github.com/indic-transliteration/indic_transliteration_py)
-- Scheme data is auto-generated from TOML files in the [common_maps](../common_maps/) directory
+- Scheme data is auto-generated from TOML files in the [common_maps](https://github.com/indic-transliteration/common_maps) directory
 - The package works on all Dart platforms: Web, Flutter, and VM
 - No file I/O or asset bundles required - all data is generated at compile time
