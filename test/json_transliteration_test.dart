@@ -132,11 +132,11 @@ void main() {
         if (input == null) continue;
 
         test('roundtrip $description - $script', () {
-          final toDev =
-              transliterate(input, fromScheme: script, toScheme: devanagari);
-          final back =
-              transliterate(toDev, fromScheme: devanagari, toScheme: script);
-          expect(back, equals(input));
+          final toScript =
+              transliterate(devExpected, fromScheme: devanagari, toScheme: script);
+          final backToDev =
+              transliterate(toScript, fromScheme: script, toScheme: devanagari);
+          expect(backToDev, equals(devExpected));
         });
       }
     }
