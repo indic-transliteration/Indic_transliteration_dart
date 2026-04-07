@@ -1,5 +1,15 @@
 import 'scheme.dart';
 
+/// List of romanization scheme IDs that support capitalization.
+///
+/// These schemes use specific diacritical marks that should be converted
+/// to lowercase when processing input. The supported schemes are:
+/// - iast (International Alphabet of Sanskrit Transliteration)
+/// - iast_iso_m (IAST with ISO 15919 modifications)
+/// - iso (ISO 15919)
+/// - iso_vedic (ISO 15919 Vedic variant)
+/// - kolkata_v2 (Kolkata romanization v2)
+/// - titus (Titus romanization)
 const _capitalizableSchemeIds = [
   'iast',
   'iast_iso_m',
@@ -9,6 +19,10 @@ const _capitalizableSchemeIds = [
   'titus',
 ];
 
+/// Mapping of uppercase capitalizable characters to their lowercase equivalents.
+///
+/// This map is used to convert uppercase romanization characters with
+/// diacritical marks to their lowercase forms. For example, 'Ā' -> 'ā'.
 const _capitalToLower = {
   'A': 'a',
   'B': 'b',
@@ -53,6 +67,38 @@ const _capitalToLower = {
   'Ō': 'ō',
 };
 
+/// Transliterates text from a romanization scheme to another script.
+///
+/// This is the core function for converting romanized text (like IAST, ITRANS,
+/// Harvard-Kyoto, etc.) to either another romanization or to a native Indic
+/// script. It handles:
+/// - Capitalization normalization for supported schemes
+/// - Toggler sequences that switch transliteration mode
+/// - Suspension markers that temporarily pause transliteration
+/// - Proper consonant-vowel joining with virama
+/// - Accent reordering when converting to Brahmic scripts
+///
+/// The function processes input by:
+/// 1. Converting uppercase to lowercase for capitalizable schemes
+/// 2. Processing togglers and suspension markers
+/// 3. Matching tokens against the scheme map
+/// 4. Appending 'a' after final consonants
+/// 5. Reordering accents for Brahmic output
+///
+/// Parameters:
+/// - [data] - The input text in the source romanization scheme.
+/// - [schemeMap] - The [SchemeMap] containing mappings from source to target.
+/// - [togglers] - A map of token pairs that toggle transliteration mode on/off.
+/// - [suspendOn] - Set of tokens that suspend transliteration when encountered.
+/// - [suspendOff] - Set of tokens that resume transliteration after suspension.
+///
+/// Returns the transliterated text in the target script.
+///
+/// Example:
+/// ```dart
+/// final map = getSchemeMap('iast', 'devanagari');
+/// final result = roman('hindi', map); // Returns 'हिंदी'
+/// ```
 String roman(
   String data,
   SchemeMap schemeMap, {
