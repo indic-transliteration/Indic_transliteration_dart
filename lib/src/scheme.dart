@@ -100,6 +100,12 @@ class Scheme {
     return accents.map((k, v) => MapEntry(k, v.toString()));
   }
 
+  Map<String, List<String>>? getAccentedVowelAlternates() {
+    final alternates = data['accented_vowel_alternates'];
+    if (alternates == null) return null;
+    return alternates.map((k, v) => MapEntry(k, List<String>.from(v)));
+  }
+
   Map<String, String>? getShortcuts() {
     final shortcuts = data['shortcuts'];
     if (shortcuts == null) return null;
@@ -153,17 +159,29 @@ class Scheme {
 
   String unapplyShortcuts(String dataIn) {
     final shortcuts = getShortcuts();
-    if (shortcuts == null) return dataIn;
-
+    final accentedAlternates = getAccentedVowelAlternates();
     var result = dataIn;
-    for (final entry in shortcuts.entries) {
-      final key = entry.key;
-      final shortcut = entry.value;
-      if (shortcut.contains(key)) {
+
+    if (shortcuts != null) {
+      for (final entry in shortcuts.entries) {
+        final key = entry.key;
+        final shortcut = entry.value;
+        if (shortcut.contains(key)) {
+          result = result.replaceAll(shortcut, key);
+        }
         result = result.replaceAll(shortcut, key);
       }
-      result = result.replaceAll(shortcut, key);
     }
+
+    if (accentedAlternates != null) {
+      for (final entry in accentedAlternates.entries) {
+        final standard = entry.key;
+        for (final alternate in entry.value) {
+          result = result.replaceAll(alternate, standard);
+        }
+      }
+    }
+
     return result;
   }
 
