@@ -1,6 +1,6 @@
 name: indic_transliteration_dart
 description: A Dart library for transliterating Indic scripts and romanizations.
-version: 2.3.82
+version: 2.3.83
 repository: https://github.com/indic-transliteration/indic_transliteration_dart
 homepage: https://github.com/indic-transliteration/indic_transliteration_dart
 
