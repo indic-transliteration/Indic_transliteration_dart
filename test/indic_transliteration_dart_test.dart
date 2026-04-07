@@ -1,4 +1,5 @@
 import 'package:indic_transliteration_dart/indic_transliteration_dart.dart';
+import 'package:indic_transliteration_dart/src/roman_numerals.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -542,6 +543,110 @@ void main() {
       final scheme = getScheme(devanagari);
       final result = scheme.dotForNumericIds('हरि बोल १।३।٥٤');
       expect(result.contains('.'), isTrue);
+    });
+  });
+
+  group('Roman scheme methods tests', () {
+    test('fix_lazy_anusvaara itrans', () {
+      final scheme = getScheme(itrans);
+      expect(scheme.fixLazyAnusvaara('shaMkara').isNotEmpty, isTrue);
+      expect(scheme.fixLazyAnusvaara('saMchara').isNotEmpty, isTrue);
+    });
+
+    test('fix_lazy_anusvaara slp1', () {
+      final scheme = getScheme(slp1);
+      expect(scheme.fixLazyAnusvaara('aham').isNotEmpty, isTrue);
+      expect(scheme.fixLazyAnusvaara('saMga').isNotEmpty, isTrue);
+    });
+
+    test('to_lay_indian optitrans', () {
+      final scheme = getScheme(optitrans);
+      expect(scheme.toLayIndian('taM jitvA'), equals('tam jitva'));
+      expect(scheme.toLayIndian('kRShNa'), equals('krishna'));
+    });
+
+    test('get_standard_form iast', () {
+      final scheme = getScheme(iast);
+      final result = scheme.getStandardForm('dŕ̥ṃhasva');
+      expect(result.contains('d'), isTrue);
+    });
+
+    test('get_double_lettered optitrans', () {
+      final scheme = getScheme(optitrans);
+      expect(scheme.getDoubleLettered('taM jitvA pUraya').isNotEmpty, isTrue);
+    });
+
+    test('mark_off_non_indic_in_line iast', () {
+      final scheme = getScheme(iast);
+      final text =
+          '05 The Śaivas Inclusivist View of Their Own and the Vaidikas Religion';
+      final result = scheme.markOffNonIndicInLine(text);
+      expect(result.isNotEmpty, isTrue);
+    });
+
+    test('approximate_from_iso_urdu optitrans', () {
+      final scheme = getScheme(optitrans);
+      expect(scheme.approximateFromIsoUrdu('lućpanaʼī').isNotEmpty, isTrue);
+      expect(scheme.approximateFromIsoUrdu('mūtābaat').isNotEmpty, isTrue);
+    });
+  });
+
+  group('Accent tests', () {
+    test('strip_accents', () {
+      final scheme = getScheme(devanagari);
+      final result = scheme.stripAccents('सैॗषा');
+      expect(result.isNotEmpty, isTrue);
+    });
+
+    test('add_accent_to_previous_syllable', () {
+      final scheme = getScheme(devanagari);
+      final result = addAccentToPreviousSyllable(
+        scheme: scheme,
+        text: 'सैॗषा',
+        oldAccent: 'ॗ',
+      );
+      expect(result.isNotEmpty, isTrue);
+    });
+
+    test('set_diirgha_svaritas', () {
+      final result = setDiirghaSvaritas(
+        scheme: getScheme(devanagari),
+        text: 'त॑स्माद्वा॑',
+      );
+      expect(result.isNotEmpty, isTrue);
+    });
+
+    test('to_US_accents basic', () {
+      final result = toUsAccents(text: 'सो॑ ऽनाधृ॒ष्यः');
+      expect(result.isNotEmpty, isTrue);
+    });
+  });
+
+  group('Roman numerals tests', () {
+    test('convert_to_integer standard', () {
+      expect(convertToInteger('Ⅰ'), equals(1));
+      expect(convertToInteger('Ⅱ'), equals(2));
+      expect(convertToInteger('Ⅲ'), equals(3));
+      expect(convertToInteger('Ⅳ'), equals(4));
+      expect(convertToInteger('Ⅴ'), equals(5));
+      expect(convertToInteger('Ⅵ'), equals(6));
+      expect(convertToInteger('Ⅹ'), equals(10));
+      expect(convertToInteger('Ⅻ'), equals(12));
+    });
+
+    test('convert_to_integer lowercase', () {
+      expect(convertToInteger('ⅰ'), equals(1));
+      expect(convertToInteger('ⅱ'), equals(2));
+      expect(convertToInteger('ⅲ'), equals(3));
+    });
+
+    test('convert_to_integer invalid types', () {
+      expect(() => convertToInteger(123 as dynamic), throwsA(isA<TypeError>()));
+    });
+
+    test('convert_to_integer invalid numeral empty', () {
+      expect(
+          () => convertToInteger(''), throwsA(isA<InvalidRomanNumeralError>()));
     });
   });
 }

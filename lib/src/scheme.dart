@@ -548,3 +548,256 @@ SchemeMap getSchemeMap(String fromName, String toName) {
 void initializeSchemes() {
   initSchemesData();
 }
+
+extension SchemeExtensions on Scheme {
+  String toLayIndian(String text,
+      {String jnReplacement = "GY", String tReplacement = "t"}) {
+    var result = text;
+    result = result.replaceAll('RR', 'ri');
+    result = result.replaceAll('R', 'ri');
+    result = result.replaceAll('LLi', 'lri');
+    result = result.replaceAll('LLI', 'lri');
+    result = result.replaceAll('jn', jnReplacement);
+    result = result.replaceAll('x', 'ksh');
+    if (tReplacement != "t") {
+      result = result.replaceAll("t", tReplacement);
+    }
+    return result.toLowerCase();
+  }
+
+  String getStandardForm(String data) {
+    var result = data;
+    result = result.replaceAll('ŕ', 'ṛ');
+    result = result.replaceAll('ṃ', 'ṃ');
+    result = result.replaceAll('ŕ̥', 'ṛ̥');
+    result = result.replaceAll('ṃ', 'ṃ');
+    result = result.replaceAll('ṝ', 'ṝ');
+    return result;
+  }
+
+  String getDoubleLettered(String data) {
+    final vowels = getVowels() ?? {};
+    final vowelMarks = getVowelMarks() ?? {};
+
+    var result = data;
+    for (final entry in vowels.entries) {
+      final devVowel = entry.key;
+      final romanValue = entry.value.toString();
+      if (devVowel == 'आ') {
+        result = result.replaceAll('A', 'aa');
+        result = result.replaceAll(romanValue, 'aa');
+      } else if (devVowel == 'ई') {
+        result = result.replaceAll('I', 'ii');
+        result = result.replaceAll(romanValue, 'ii');
+      } else if (devVowel == 'ऊ') {
+        result = result.replaceAll('U', 'uu');
+        result = result.replaceAll(romanValue, 'uu');
+      }
+    }
+    return result;
+  }
+
+  String markOffNonIndicInLine(String text) {
+    final words = text.split(RegExp(r'\s+'));
+    final processedWords = <String>[];
+
+    for (final word in words) {
+      processedWords.add(word);
+    }
+
+    return processedWords.join(' ');
+  }
+
+  String approximateFromIsoUrdu(String text, {bool addTerminalA = true}) {
+    var result = text;
+
+    final replacements = {
+      '‘': '',
+      'ʼ': '{}',
+      '’': '{}',
+      'oo': 'uu',
+      'ee': 'ii',
+      'ë': 'E',
+      'ě': 'E',
+      'e': 'ē',
+      'o': 'ō',
+      'ā': 'aa',
+      'ī': 'ii',
+      'ū': 'uu',
+      'w': 'v',
+      'ẕ': 'z',
+      'ż': 'z',
+      'ẓ': 'z',
+      'ž': 'z',
+      'ḳ': 'q',
+      'ṣ': 's',
+      's̱ẖ': 'sh',
+      's̱': 't',
+      'ẖ': 'h',
+      'ḥ': 'h',
+    };
+
+    for (final entry in replacements.entries) {
+      result = result.replaceAll(entry.key, entry.value);
+    }
+
+    final vowelsPattern = RegExp(r"([aāeēiīoōuū])'");
+    result = result.replaceAllMapped(vowelsPattern, (match) => match.group(1)!);
+
+    final vowelsPattern2 = RegExp(r"'([aāeēiīoōuū])");
+    result =
+        result.replaceAllMapped(vowelsPattern2, (match) => match.group(1)!);
+
+    result = result.replaceAll("'", "");
+    result = result.replaceAllMapped(RegExp(r"'h"), (match) => "{}h");
+
+    if (addTerminalA) {
+      result = result.replaceAllMapped(
+        RegExp(r'([kghncjzftdTDpbmyrlvsq])(?=\s|$|-)'),
+        (match) => '${match.group(1)}a',
+      );
+    }
+
+    return result;
+  }
+
+  static const _accentsPattern =
+      r"[\u1CD0-\u1CE8\u1CF9\u1CFA\uA8E0-\uA8F1\u0951-\u0954\u0957]";
+
+  String stripAccents(String text) {
+    return text.replaceAll(RegExp(_accentsPattern), '');
+  }
+
+  int? getAdjacentSyllableIndex(
+      int currentIndex, List<String> letters, int direction,
+      {String? pausesPattern}) {
+    final pauser =
+        pausesPattern != null ? RegExp(pausesPattern) : RegExp(r'[।॥\n,;]+');
+
+    var index = currentIndex + direction;
+    while (index >= 0 && index < letters.length) {
+      if (pauser.hasMatch(letters[index])) {
+        return null;
+      }
+      final letter = letters[index];
+      final consonants = getConsonants() ?? {};
+      final vowels = getVowels() ?? {};
+
+      for (final char in letter.runes) {
+        final charStr = String.fromCharCode(char);
+        if (consonants.containsKey(charStr) || vowels.containsKey(charStr)) {
+          return index;
+        }
+      }
+      index += direction;
+    }
+    return null;
+  }
+
+  List<String> getLetters() {
+    final result = <String>[];
+    final vowels = getVowels();
+    final consonants = getConsonants();
+
+    if (vowels != null) {
+      result.addAll(vowels.values);
+    }
+    if (consonants != null) {
+      result.addAll(consonants.values);
+    }
+    return result;
+  }
+}
+
+String addAccentToPreviousSyllable({
+  required Scheme scheme,
+  required String text,
+  required String oldAccent,
+  String? newAccent,
+  bool dropAtFirstSyllable = false,
+  bool retainOldAccent = false,
+}) {
+  newAccent ??= oldAccent;
+  final letters = scheme.splitVyanjanasAndSvaras(text);
+  final outLetters = <String>[];
+  final vowels = scheme['vowels'].values.map((v) => v.toString()).toList();
+  final vowelsYogavaahas = vowels
+    ..addAll(scheme['yogavaahas'].values.map((v) => v.toString()));
+  var accentCarryover = '';
+
+  for (var index = 0; index < letters.length; index++) {
+    final letter = letters[index];
+    if (letter.endsWith(oldAccent)) {
+      var vowelPosition = -1;
+      for (var i = outLetters.length - 1; i >= 0; i--) {
+        final prevLetter = outLetters[i];
+        if (prevLetter.isNotEmpty && vowelsYogavaahas.contains(prevLetter[0])) {
+          vowelPosition = i;
+          break;
+        }
+      }
+      if (vowelPosition == -1) {
+        if (!dropAtFirstSyllable) {
+          accentCarryover += newAccent;
+        }
+      } else {
+        outLetters[vowelPosition] += newAccent;
+      }
+      if (!retainOldAccent) {
+        outLetters.add(letter.substring(0, letter.length - 1));
+      } else {
+        outLetters.add(letter);
+      }
+    } else {
+      outLetters.add(letter);
+    }
+  }
+  return accentCarryover + scheme.joinStrings(outLetters);
+}
+
+String setDiirghaSvaritas(
+    {required Scheme scheme, required String text, String accent = '᳚'}) {
+  final longVowels = scheme.longVowels;
+  final vowelMarks = scheme.getVowelMarks() ?? {};
+  final longVowelMarks =
+      vowelMarks.values.where((v) => longVowels.contains(v)).toList();
+  final yogavaahas =
+      scheme['yogavaahas'].values.map((v) => v.toString()).toList();
+
+  final vowelString = [...longVowels, ...longVowelMarks, ...yogavaahas].join();
+  if (vowelString.isEmpty) return text;
+
+  return text.replaceAllMapped(
+      RegExp('(?<=[$vowelString]+)॑'), (match) => accent);
+}
+
+String toUsAccents({
+  String? text,
+  Scheme? scheme,
+  String udatta = '᳓',
+  String svaritaNew = '᳙',
+  String pauses = r'[।॥\n,;]+',
+  String skipPattern = r'\+\+\+\(.+?\)\+\+\+',
+}) {
+  if (text == null) return '';
+
+  scheme ??= getScheme('devanagari');
+
+  const sannatara = '॒';
+  const svarita = '॑';
+
+  if (!text.contains(svarita) &&
+      !text.contains(sannatara) &&
+      !text.contains('᳚') &&
+      !text.contains('᳛')) {
+    return text;
+  }
+
+  if (text.contains(svaritaNew) || text.contains(udatta)) {
+    return text;
+  }
+
+  text = text.replaceAll(RegExp(r'[᳖᳚᳛]'), svarita);
+
+  return text;
+}
