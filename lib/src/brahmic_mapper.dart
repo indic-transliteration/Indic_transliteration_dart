@@ -1,12 +1,36 @@
 import 'scheme.dart';
 
+/// The name of the Gurmukhi script, used for identifying Gurmukhi-specific processing.
 const String _gurmukhiName = 'gurmukhi';
+
+/// The name of the Bengali script, used for identifying Bengali-specific processing.
 const String _bengaliName = 'bengali';
+
+/// The name of the Telugu script, used for identifying Telugu-specific processing.
 const String _teluguName = 'telugu';
+
+/// The name of the Kannada script, used for identifying Kannada-specific processing.
 const String _kannadaName = 'kannada';
+
+/// The name of the Tamil subscripted variant.
 const String _tamilSubName = 'tamil_subscripted';
+
+/// The name of the Tamil superscripted variant.
 const String _tamilSupName = 'tamil_superscripted';
 
+/// Replaces Addak (ੱ) with its equivalent virama + consonant form in Gurmukhi.
+///
+/// Addak is a half-form of a consonant in Gurmukhi that precedes another consonant.
+/// This function converts Addak followed by a consonant into the full form
+/// with virama.
+///
+/// Example:
+/// - 'ੱਕ' becomes 'ਕ੍ਕ'
+/// - 'ੱਗ' becomes 'ਗ੍ਗ'
+///
+/// [text] - The Gurmukhi text with Addak characters.
+///
+/// Returns the text with Addak replaced by virama forms.
 String _replaceAddak(String text) {
   text = text.replaceAllMapped(
     RegExp(r'ੱ([ਕਖ])'),
@@ -55,21 +79,59 @@ String _replaceAddak(String text) {
   return text;
 }
 
+/// Replaces Bengali Khanda ta (ৎ) with its equivalent form.
+///
+/// The Khanda ta is a special character in Bengali used for the ত sound
+/// after vowels. This function converts it to its equivalent with virama.
+///
+/// [text] - The Bengali text with Khanda ta.
+///
+/// Returns the text with Khanda ta replaced by ত্.
 String _replaceKhanda(String text) {
   return text.replaceAll('ৎ', 'ত্');
 }
 
+/// Replaces Telugu auxiliary mark (ౝ) with its equivalent form.
+///
+/// This function converts the Telugu auxiliary mark to its equivalent
+/// representation using the anusvara + virama combination.
+///
+/// [text] - The Telugu text with auxiliary mark.
+///
+/// Returns the text with auxiliary mark replaced by न్.
 String _replaceNTelugu(String text) {
   text = text.replaceAll('ౝ', 'న్');
   return text;
 }
 
+/// Replaces Kannada auxiliary marks with their equivalent forms.
+///
+/// This function converts Kannada auxiliary marks to their equivalent
+/// representations. It handles:
+/// - ೝ ( auxiliary mark) -> ನ್
+/// - ೜ (Shri ligature) -> श्री
+///
+/// [text] - The Kannada text with auxiliary marks.
+///
+/// Returns the text with auxiliary marks replaced.
 String _replaceNKannada(String text) {
   text = text.replaceAll('ೝ', 'ನ್');
   text = text.replaceAll('೜', 'श्री');
   return text;
 }
 
+/// Moves subscript numerals before their associated maatraa (vowel mark).
+///
+/// In Tamil subscripted notation, numerals appear after the vowel mark.
+/// This function rearranges them to appear before the vowel mark for
+/// proper transliteration.
+///
+/// Example:
+/// - 'க்₂' becomes '₂க்'
+///
+/// [text] - The Tamil subscripted text with numerals after vowel marks.
+///
+/// Returns the text with numerals moved before vowel marks.
 String _moveBeforeMaatraaSubscripts(String text) {
   text = text.replaceAllMapped(
     RegExp(r'([া-ௌ꞉ம்]+)([₂₃₄])'),
@@ -78,6 +140,18 @@ String _moveBeforeMaatraaSubscripts(String text) {
   return text;
 }
 
+/// Moves superscript numerals before their associated maatraa (vowel mark).
+///
+/// In Tamil superscripted notation, numerals appear after the vowel mark.
+/// This function rearranges them to appear before the vowel mark for
+/// proper transliteration.
+///
+/// Example:
+/// - 'க்²' becomes '²க்'
+///
+/// [text] - The Tamil superscripted text with numerals after vowel marks.
+///
+/// Returns the text with numerals moved before vowel marks.
 String _moveBeforeMaatraaSuperscripts(String text) {
   text = text.replaceAllMapped(
     RegExp(r'([া-ௌ꞉ம்]+)([²³⁴])'),
@@ -86,6 +160,31 @@ String _moveBeforeMaatraaSuperscripts(String text) {
   return text;
 }
 
+/// Transliterates text from a Brahmic (Indic) script to another script.
+///
+/// This is the core function for converting between native Indic scripts
+/// (like Devanagari, Bengali, Tamil, etc.). It handles:
+/// - Script-specific character replacements (Gurmukhi Addak, Bengali Khanda, etc.)
+/// - Proper handling of vowel marks (matras)
+/// - Consonant-vowel joining with virama
+/// - Accent reordering when converting to romanization
+///
+/// The function processes the input by:
+/// 1. Applying any script-specific preprocessing (Addak, Khanda, etc.)
+/// 2. Handling accent ordering for romanization output
+/// 3. Iterating through characters and matching against the scheme map
+/// 4. Appending 'a' after final consonants (for romanization)
+///
+/// [data] - The input text in the source Brahmic script.
+/// [schemeMap] - The [SchemeMap] containing mappings from source to target.
+///
+/// Returns the transliterated text in the target script.
+///
+/// Example:
+/// ```dart
+/// final map = getSchemeMap('devanagari', 'iast');
+/// final result = brahmic('हिंदी', map); // Returns 'hiṃdī'
+/// ```
 String brahmic(String data, SchemeMap schemeMap) {
   var processedData = data;
 
