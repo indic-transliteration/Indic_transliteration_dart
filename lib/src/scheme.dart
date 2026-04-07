@@ -3,6 +3,23 @@ import 'data/schemes.dart'
 
 enum VisargaApproximation { aha, h }
 
+const languageCodeToScript = {
+  'sa': 'devanagari',
+  'ta': 'tamil',
+  'ka': 'kannada',
+  'te': 'telugu',
+  'hi': 'devanagari',
+  'ma': 'devanagari',
+  'ne': 'devanagari',
+  'kok': 'devanagari',
+  'as': 'assamese',
+  'ml': 'malayalam',
+  'bn': 'bengali',
+  'gu': 'gujarati',
+  'pa': 'panjabi',
+  'or': 'oriya',
+};
+
 class Scheme {
   final String name;
   final bool isRoman;

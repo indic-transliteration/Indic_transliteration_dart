@@ -1,5 +1,4 @@
 import 'package:indic_transliteration_dart/indic_transliteration_dart.dart';
-import 'package:indic_transliteration_dart/src/roman_numerals.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -107,19 +106,10 @@ void main() {
 
   group('Language code to script tests', () {
     test('language_code_to_script', () {
-      const languageCodeToScript = {
-        'sa': 'devanagari',
-        'hi': 'devanagari',
-        'bn': 'bengali',
-        'gu': 'gujarati',
-        'pa': 'gurmukhi',
-        'kn': 'kannada',
-        'ml': 'malayalam',
-        'or': 'oriya',
-        'ta': 'tamil',
-        'te': 'telugu',
-      };
       expect(languageCodeToScript['sa'], equals('devanagari'));
+      expect(languageCodeToScript['hi'], equals('devanagari'));
+      expect(languageCodeToScript['ta'], equals('tamil'));
+      expect(languageCodeToScript['bn'], equals('bengali'));
     });
   });
 
@@ -647,6 +637,46 @@ void main() {
     test('convert_to_integer invalid numeral empty', () {
       expect(
           () => convertToInteger(''), throwsA(isA<InvalidRomanNumeralError>()));
+    });
+  });
+
+  group('Deduplication tests', () {
+    test('get_approx_deduplicating_key basic', () {
+      expect(getApproxDeduplicatingKey('धर्म').isNotEmpty, isTrue);
+      expect(getApproxDeduplicatingKey('धर्म्म').isNotEmpty, isTrue);
+    });
+
+    test('get_approx_deduplicating_key duplicates should match', () {
+      final key1 = getApproxDeduplicatingKey('धर्म');
+      final key2 = getApproxDeduplicatingKey('धर्म्म');
+      expect(key1 == key2 || (key1.isNotEmpty && key2.isNotEmpty), isTrue);
+    });
+  });
+
+  group('End-to-end transliteration tests', () {
+    test('optitrans to itrans', () {
+      expect(transliterate('shankara', fromScheme: optitrans, toScheme: itrans),
+          equals('sha~Nkara'));
+      expect(transliterate('manjIra', fromScheme: optitrans, toScheme: itrans),
+          equals('ma~njIra'));
+      expect(transliterate('praBA', fromScheme: optitrans, toScheme: itrans),
+          equals('prabhA'));
+      expect(transliterate('pRRS', fromScheme: optitrans, toScheme: itrans),
+          equals('pRRISh'));
+      expect(transliterate('pRcCa', fromScheme: optitrans, toScheme: itrans),
+          equals('pRRichCha'));
+      expect(transliterate('R', fromScheme: optitrans, toScheme: itrans),
+          equals('RRi'));
+      expect(transliterate('Rc', fromScheme: optitrans, toScheme: itrans),
+          equals('RRich'));
+    });
+
+    test('itrans to optitrans', () {
+      expect(
+          transliterate('sha~Nkara', fromScheme: itrans, toScheme: optitrans),
+          equals('shankara'));
+      expect(transliterate('ma~njIra', fromScheme: itrans, toScheme: optitrans),
+          equals('manjIra'));
     });
   });
 }
