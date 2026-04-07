@@ -478,7 +478,10 @@ class SchemeMap {
     final toData = toScheme.data;
 
     for (final group in fromData.keys) {
-      if (group == 'alternates' || group == 'accented_vowel_alternates') {
+      if (group == 'alternates' ||
+          group == 'accented_vowel_alternates' ||
+          group.startsWith('approximate_') ||
+          group.startsWith('extra_')) {
         continue;
       }
       if (!toData.containsKey(group)) {
@@ -486,8 +489,16 @@ class SchemeMap {
       }
 
       final Map<String, String> conjunctMap = {};
-      final fromGroup = fromData[group] ?? {};
-      final toGroup = toData[group] ?? {};
+
+      final Map<String, dynamic> fromGroup = {};
+      fromGroup.addAll(Map<String, dynamic>.from((fromData['approximate_$group'] as Map?) ?? {}));
+      fromGroup.addAll(Map<String, dynamic>.from((fromData[group] as Map?) ?? {}));
+      fromGroup.addAll(Map<String, dynamic>.from((fromData['extra_$group'] as Map?) ?? {}));
+
+      final Map<String, dynamic> toGroup = {};
+      toGroup.addAll(Map<String, dynamic>.from((toData[group] as Map?) ?? {}));
+      toGroup.addAll(Map<String, dynamic>.from((toData['extra_$group'] as Map?) ?? {}));
+      toGroup.addAll(Map<String, dynamic>.from((toData['approximate_$group'] as Map?) ?? {}));
 
       for (final entry in fromGroup.entries) {
         final key = entry.key;
