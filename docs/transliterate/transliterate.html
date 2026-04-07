@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the transliterate function from the transliterate library, for the Dart programming language.">
+  <title>transliterate function - transliterate library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">indic_transliteration_dart</a></li>
+    <li><a href="../transliterate/">transliterate.dart</a></li>
+    <li class="self-crumb">transliterate function</li>
+  </ol>
+  <div class="self-name">transliterate</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="transliterate&#47;transliterate-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">transliterate</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">transliterate</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="transliterate-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">data</span>, {</span></li>
+<li><span class="parameter" id="transliterate-param-fromScheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">fromScheme</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-toScheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">toScheme</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-schemeMap"><span class="type-annotation"><a href="../indic_transliteration_dart/SchemeMap-class.html">SchemeMap</a>?</span> <span class="parameter-name">schemeMap</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-togglers"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">togglers</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-suspendOn"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">suspendOn</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-suspendOff"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">suspendOff</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="transliterate-param-maybeUseDravidianVariant"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">maybeUseDravidianVariant</span> = <span class="default-value">&#39;no&#39;</span>, </span></li>
+</ol>})
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Transliterates text from one Indic script or romanization scheme to another.</p>
+<p>This is the main function for converting text between different Indic scripts
+(such as Devanagari, Bengali, Tamil, etc.) and romanization schemes
+(such as IAST, ITRANS, HK, etc.).</p>
+<p>The function automatically detects the source script if not specified,
+and supports various options for handling Dravidian language variants,
+togglers, and suspension markers.</p>
+<p>Example usage:</p>
+<pre class="language-dart"><code class="language-dart">// Convert Devanagari to IAST
+final result = transliterate('हिंदी', fromScheme: 'devanagari', toScheme: 'iast');
+// Result: 'hindi'
+
+// Convert ITRANS to Devanagari
+final result = transliterate('namaste', fromScheme: 'itrans', toScheme: 'devanagari');
+// Result: 'नमस्ते'
+</code></pre>
+<p><code>data</code> - The input text to transliterate.</p>
+<p><code>fromScheme</code> - The source scheme name (e.g., 'devanagari', 'iast', 'itrans').
+If null, auto-detection will be attempted.</p>
+<p><code>toScheme</code> - The target scheme name. Required if schemeMap is not provided.</p>
+<p><code>schemeMap</code> - Optional pre-built SchemeMap for custom transliteration rules.
+If provided, fromScheme and toScheme are ignored.</p>
+<p><code>togglers</code> - A map of token pairs that toggle transliteration mode on/off.
+Useful for handling special characters or escape sequences.</p>
+<p><code>suspendOn</code> - Set of tokens that suspend transliteration when encountered.</p>
+<p><code>suspendOff</code> - Set of tokens that resume transliteration after suspension.</p>
+<p><code>maybeUseDravidianVariant</code> - Controls Dravidian variant usage:</p>
+<ul>
+<li>'no' (default): Do not use Dravidian variants</li>
+<li>'yes': Use Dravidian variant if available and source/target is Dravidian</li>
+<li>'force': Force Dravidian variant regardless of source/target</li>
+</ul>
+<p>Returns the transliterated string.</p>
+<p>Throws <a href="https://api.flutter.dev/flutter/dart-core/ArgumentError-class.html">ArgumentError</a> if toScheme is not specified and schemeMap is not provided.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">String transliterate(
+  String data, {
+  String? fromScheme,
+  String? toScheme,
+  SchemeMap? schemeMap,
+  Map&lt;String, String&gt; togglers = const {},
+  Set&lt;String&gt; suspendOn = const {},
+  Set&lt;String&gt; suspendOff = const {},
+  String maybeUseDravidianVariant = &#39;no&#39;,
+}) {
+  if (schemeMap == null) {
+    fromScheme ??= detect(data);
+
+    var toSchemeFinal = toScheme;
+
+    if (maybeUseDravidianVariant == &#39;yes&#39; ||
+        maybeUseDravidianVariant == &#39;force&#39;) {
+      if ([&#39;kannada&#39;, &#39;tamil&#39;, &#39;telugu&#39;, &#39;malayalam&#39;].contains(fromScheme)) {
+        final dravidianScheme = &#39;${toScheme}_dravidian&#39;;
+        if (schemesData.containsKey(dravidianScheme)) {
+          toSchemeFinal = dravidianScheme;
+        }
+      } else if ([&#39;optitrans&#39;, &#39;itrans&#39;, &#39;hk&#39;].contains(fromScheme)) {
+        final dravidianScheme = &#39;${fromScheme}_dravidian&#39;;
+        if (schemesData.containsKey(dravidianScheme)) {
+          fromScheme = dravidianScheme;
+        }
+      }
+    }
+
+    if (toSchemeFinal == null) {
+      throw ArgumentError(
+        &#39;toScheme must be specified if schemeMap is not provided&#39;,
+      );
+    }
+
+    schemeMap = getSchemeMap(fromScheme, toSchemeFinal);
+  }
+
+  var result = schemeMap.fromScheme.unapplyShortcuts(data);
+
+  if (schemeMap.fromScheme.isRoman) {
+    result = roman_mapper.roman(
+      result,
+      schemeMap,
+      togglers: togglers,
+      suspendOn: suspendOn,
+      suspendOff: suspendOff,
+    );
+  } else {
+    result = brahmic_mapper.brahmic(result, schemeMap);
+  }
+
+  result = schemeMap.toScheme.applyShortcuts(result);
+  return result;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">indic_transliteration_dart</a></li>
+    <li><a href="../transliterate/">transliterate</a></li>
+    <li class="self-crumb">transliterate function</li>
+</ol>
+
+    <h5>transliterate library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    indic_transliteration_dart
+      2.3.82
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

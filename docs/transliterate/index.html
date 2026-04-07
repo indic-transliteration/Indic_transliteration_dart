@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="transliterate library API docs, for the Dart programming language.">
+  <title>transliterate library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">indic_transliteration_dart</a></li>
+    <li class="self-crumb">transliterate.dart</li>
+  </ol>
+  <div class="self-name">transliterate</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="transliterate&#47;transliterate-library-sidebar.html">
+  
+    <div>
+      
+
+      <h1>
+        <span class="kind-library">transliterate</span>
+        library 
+ 
+
+      </h1>
+    </div>
+
+    
+
+
+
+
+
+
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+      <dl class="properties">
+          <dt id="bengali" class="constant">
+    <span class="name "><a href="../transliterate/bengali-constant.html">bengali</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Bengali script identifier.
+  
+
+</dd>
+
+          <dt id="devanagari" class="constant">
+    <span class="name "><a href="../transliterate/devanagari-constant.html">devanagari</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Devanagari script identifier.
+Used as a scheme name in transliteration operations.
+  
+
+</dd>
+
+          <dt id="grantha" class="constant">
+    <span class="name "><a href="../transliterate/grantha-constant.html">grantha</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Grantha script identifier.
+  
+
+</dd>
+
+          <dt id="gujarati" class="constant">
+    <span class="name "><a href="../transliterate/gujarati-constant.html">gujarati</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Gujarati script identifier.
+  
+
+</dd>
+
+          <dt id="gurmukhi" class="constant">
+    <span class="name "><a href="../transliterate/gurmukhi-constant.html">gurmukhi</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Gurmukhi (Punjabi) script identifier.
+  
+
+</dd>
+
+          <dt id="hk" class="constant">
+    <span class="name "><a href="../transliterate/hk-constant.html">hk</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Harvard-Kyoto romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="hkDravidian" class="constant">
+    <span class="name "><a href="../transliterate/hkDravidian-constant.html">hkDravidian</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Harvard-Kyoto Dravidian variant identifier.
+  
+
+</dd>
+
+          <dt id="iast" class="constant">
+    <span class="name "><a href="../transliterate/iast-constant.html">iast</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  International Alphabet of Sanskrit Transliteration (IAST) identifier.
+  
+
+</dd>
+
+          <dt id="iso" class="constant">
+    <span class="name "><a href="../transliterate/iso-constant.html">iso</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  ISO 15919 romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="isoVedic" class="constant">
+    <span class="name "><a href="../transliterate/isoVedic-constant.html">isoVedic</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  ISO 15919 Vedic variant identifier.
+  
+
+</dd>
+
+          <dt id="itrans" class="constant">
+    <span class="name "><a href="../transliterate/itrans-constant.html">itrans</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  ITRANS romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="itransDravidian" class="constant">
+    <span class="name "><a href="../transliterate/itransDravidian-constant.html">itransDravidian</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  ITRANS Dravidian variant identifier.
+  
+
+</dd>
+
+          <dt id="kannada" class="constant">
+    <span class="name "><a href="../transliterate/kannada-constant.html">kannada</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Kannada script identifier.
+  
+
+</dd>
+
+          <dt id="kolkata" class="constant">
+    <span class="name "><a href="../transliterate/kolkata-constant.html">kolkata</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Kolkata romanization scheme v2 identifier.
+  
+
+</dd>
+
+          <dt id="kolkataV2" class="constant">
+    <span class="name "><a href="../transliterate/kolkataV2-constant.html">kolkataV2</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Alias for kolkata_v2.
+  
+
+</dd>
+
+          <dt id="malayalam" class="constant">
+    <span class="name "><a href="../transliterate/malayalam-constant.html">malayalam</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Malayalam script identifier.
+  
+
+</dd>
+
+          <dt id="optitrans" class="constant">
+    <span class="name "><a href="../transliterate/optitrans-constant.html">optitrans</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Optitrans romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="optitransDravidian" class="constant">
+    <span class="name "><a href="../transliterate/optitransDravidian-constant.html">optitransDravidian</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Optitrans Dravidian variant identifier.
+  
+
+</dd>
+
+          <dt id="oriya" class="constant">
+    <span class="name "><a href="../transliterate/oriya-constant.html">oriya</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Oriya script identifier.
+  
+
+</dd>
+
+          <dt id="slp1" class="constant">
+    <span class="name "><a href="../transliterate/slp1-constant.html">slp1</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  SLP1 (Sanskrit Library Project 1) romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="tamil" class="constant">
+    <span class="name "><a href="../transliterate/tamil-constant.html">tamil</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Tamil script identifier.
+  
+
+</dd>
+
+          <dt id="tamilSub" class="constant">
+    <span class="name "><a href="../transliterate/tamilSub-constant.html">tamilSub</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Tamil with subscripted numerals identifier.
+  
+
+</dd>
+
+          <dt id="tamilSup" class="constant">
+    <span class="name "><a href="../transliterate/tamilSup-constant.html">tamilSup</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Tamil with superscripted numerals identifier.
+  
+
+</dd>
+
+          <dt id="telugu" class="constant">
+    <span class="name "><a href="../transliterate/telugu-constant.html">telugu</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Telugu script identifier.
+  
+
+</dd>
+
+          <dt id="titus" class="constant">
+    <span class="name "><a href="../transliterate/titus-constant.html">titus</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Titus romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="velthuis" class="constant">
+    <span class="name "><a href="../transliterate/velthuis-constant.html">velthuis</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Velthuis romanization scheme identifier.
+  
+
+</dd>
+
+          <dt id="wx" class="constant">
+    <span class="name "><a href="../transliterate/wx-constant.html">wx</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  WX romanization scheme identifier.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+      <dl class="callables">
+          <dt id="detect" class="callable">
+  <span class="name"><a href="../transliterate/detect.html">detect</a></span><span class="signature">(<wbr><span class="parameter" id="detect-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Automatically detects the Indic script or romanization scheme of the given text.
+  
+
+</dd>
+
+          <dt id="getNumber" class="callable">
+  <span class="name"><a href="../transliterate/getNumber.html">getNumber</a></span><span class="signature">(<wbr><span class="parameter" id="getNumber-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts Indic numerals in text to IAST romanization numerals.
+  
+
+</dd>
+
+          <dt id="getStandardForm" class="callable">
+  <span class="name"><a href="../transliterate/getStandardForm.html">getStandardForm</a></span><span class="signature">(<wbr><span class="parameter" id="getStandardForm-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">data</span>, </span><span class="parameter" id="getStandardForm-param-schemeName"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">schemeName</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts text to the standard form for a given romanization scheme.
+  
+
+</dd>
+
+          <dt id="likelyDravidian" class="callable">
+  <span class="name"><a href="../transliterate/likelyDravidian.html">likelyDravidian</a></span><span class="signature">(<wbr><span class="parameter" id="likelyDravidian-param-script"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">script</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Checks if the given script is a Dravidian language script.
+  
+
+</dd>
+
+          <dt id="transliterate" class="callable">
+  <span class="name"><a href="../transliterate/transliterate.html">transliterate</a></span><span class="signature">(<wbr><span class="parameter" id="transliterate-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">data</span>, {</span><span class="parameter" id="transliterate-param-fromScheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">fromScheme</span>, </span><span class="parameter" id="transliterate-param-toScheme"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">toScheme</span>, </span><span class="parameter" id="transliterate-param-schemeMap"><span class="type-annotation"><a href="../indic_transliteration_dart/SchemeMap-class.html">SchemeMap</a>?</span> <span class="parameter-name">schemeMap</span>, </span><span class="parameter" id="transliterate-param-togglers"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">togglers</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="transliterate-param-suspendOn"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">suspendOn</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="transliterate-param-suspendOff"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">suspendOff</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="transliterate-param-maybeUseDravidianVariant"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">maybeUseDravidianVariant</span> = <span class="default-value">&#39;no&#39;</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Transliterates text from one Indic script or romanization scheme to another.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">indic_transliteration_dart</a></li>
+    <li class="self-crumb">transliterate.dart</li>
+</ol>
+
+    <h5><span class="package-name">indic_transliteration_dart</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../indic_transliteration_dart/">indic_transliteration_dart</a></li>
+      <li><a href="../roman_numerals/">roman_numerals</a></li>
+      <li><a href="../transliterate/">transliterate</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>transliterate library</h5>
+  </div><!--/sidebar-offcanvas-right-->
+</main>
+<footer>
+  <span class="no-break">
+    indic_transliteration_dart
+      2.3.82
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

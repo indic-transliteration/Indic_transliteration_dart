@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the fixLazyAnusvaara method from the Scheme class, for the Dart programming language.">
+  <title>fixLazyAnusvaara method - Scheme class - indic_transliteration_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">indic_transliteration_dart</a></li>
+    <li><a href="../../indic_transliteration_dart/">indic_transliteration_dart.dart</a></li>
+    <li><a href="../../indic_transliteration_dart/Scheme-class.html">Scheme</a></li>
+    <li class="self-crumb">fixLazyAnusvaara method</li>
+  </ol>
+  <div class="self-name">fixLazyAnusvaara</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="indic_transliteration_dart&#47;Scheme-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">fixLazyAnusvaara</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">fixLazyAnusvaara</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fixLazyAnusvaara-param-dataIn"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">dataIn</span>, {</span></li>
+<li><span class="parameter" id="fixLazyAnusvaara-param-ignorePadaanta"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">ignorePadaanta</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="fixLazyAnusvaara-param-omitYrl"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">omitYrl</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="fixLazyAnusvaara-param-omitSam"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">omitSam</span> = <span class="default-value">false</span>, </span></li>
+</ol>})
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Fixes "lazy" anusvara based on Sanskrit grammar rules.</p>
+<p>Anusvara (ं) in Sanskrit can appear in different forms depending on
+context. This function converts lazy anusvara (that appears as a simple
+mark) to the appropriate form based on grammatical rules.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>dataIn</code> - The input text to process.</li>
+<li><code>ignorePadaanta</code> - If true (default), ignores padaanta (word-final) position,
+keeping the anusvara mark. If false, converts to explicit devanagari anusvara.</li>
+<li><code>omitYrl</code> - If true, omits anusvara after the letters य (y), र (r), ल (l).</li>
+<li><code>omitSam</code> - If true, omits anusvara after स (s) in 'sam' compounds.</li>
+</ul>
+<p>Returns the text with anusvara fixed according to the rules.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">String fixLazyAnusvaara(
+  String dataIn, {
+  bool ignorePadaanta = true,
+  bool omitYrl = false,
+  bool omitSam = false,
+}) {
+  final anusvara = data[&#39;yogavaahas&#39;]?[&#39;ं&#39;]?.toString() ?? &#39;ं&#39;;
+  final consonants = getConsonants() ?? {};
+  final result = StringBuffer();
+
+  for (var i = 0; i &lt; dataIn.length; i++) {
+    final char = dataIn[i];
+
+    if (char == anusvara &amp;&amp; i &gt; 0) {
+      final prevChar = dataIn[i - 1];
+
+      if (consonants.containsKey(prevChar)) {
+        final following = i + 1 &lt; dataIn.length ? dataIn[i + 1] : &#39;&#39;;
+        final followingConsonant = consonants.containsKey(following);
+
+        if (!followingConsonant || i + 1 &gt;= dataIn.length) {
+          if (omitSam &amp;&amp; prevChar == &#39;स&#39;) {
+            result.write(char);
+            continue;
+          }
+          if (omitYrl &amp;&amp;
+              (prevChar == &#39;य&#39; || prevChar == &#39;र&#39; || prevChar == &#39;ल&#39;)) {
+            result.write(char);
+            continue;
+          }
+          if (ignorePadaanta) {
+            result.write(char);
+            continue;
+          }
+          final anusvaraDev = &#39;\u0901&#39;;
+          result.write(anusvaraDev);
+          continue;
+        }
+      }
+    }
+    result.write(char);
+  }
+
+  return result.toString();
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">indic_transliteration_dart</a></li>
+    <li><a href="../../indic_transliteration_dart/">indic_transliteration_dart</a></li>
+    <li><a href="../../indic_transliteration_dart/Scheme-class.html">Scheme</a></li>
+    <li class="self-crumb">fixLazyAnusvaara method</li>
+</ol>
+
+    <h5>Scheme class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    indic_transliteration_dart
+      2.3.82
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
