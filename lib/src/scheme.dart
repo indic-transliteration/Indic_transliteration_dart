@@ -1,5 +1,10 @@
-import 'data/schemes.dart'
-    show initSchemesData, schemesData, schemeTypes, devVowelToMarkMap;
+import 'package:indic_transliteration_maps/indic_transliteration_maps.dart'
+    show
+        initSchemesData,
+        schemesData,
+        schemeTypes,
+        devVowelToMarkMap,
+        initializeAll;
 
 /// Enum representing approximation modes for visarga (ः) character.
 ///
@@ -1040,7 +1045,7 @@ SchemeMap getSchemeMap(String fromName, String toName) {
 /// In most cases, this is called automatically by the transliterate()
 /// function, but can be called explicitly if needed.
 void initializeSchemes() {
-  initSchemesData();
+  initializeAll();
 }
 
 /// Extension methods on [Scheme] for additional transliteration operations.

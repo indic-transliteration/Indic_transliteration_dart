@@ -1,5 +1,6 @@
 import 'src/scheme.dart' show getSchemeMap, SchemeMap;
-import 'src/data/schemes.dart' show schemesData;
+import 'package:indic_transliteration_maps/indic_transliteration_maps.dart'
+    show schemesData;
 import 'src/brahmic_mapper.dart' as brahmic_mapper;
 import 'src/roman_mapper.dart' as roman_mapper;
 
